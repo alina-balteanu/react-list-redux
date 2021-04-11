@@ -17,6 +17,7 @@ const App = () => {
   //component did update 
   const ref = useRef(false);
   useEffect(() => {
+    //slower transition for new item
     if (ref.current) {
       let todos = Array.from(document.querySelectorAll(".item-wrapper"));
       let lastEl = todos[todosState.todos.length - 1];
@@ -84,7 +85,14 @@ const App = () => {
   };
 
   //delete todo
-  const delTodo = id => {
+  const delTodo = (id, btnRef) => {
+
+    //make sure you don't call delete several time on the same button
+    if (btnRef.current.getAttribute("disabled")) {
+      return;
+    }
+    btnRef.current.setAttribute("disabled", "disabled")
+
     const stateCopy = [...todosState.todos];
     axios.delete(`https://6072cef1e4e0160017ddeebf.mockapi.io/todo/${id}`).then(res =>
       setTodos({

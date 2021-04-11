@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 
-
-export const TodoItem = (props) => {
+const TodoItem = (props) => {
   const getStyle = () => {
     return {
       textDecoration: props.todo.completed ? "line-through" : "none",
       color: props.todo.completed ? "#7a7a7a" : "#000"
     };
   };
+  const btnEl = useRef(null);
 
   const { id, title, completed } = props.todo;
   return (
@@ -39,7 +39,8 @@ export const TodoItem = (props) => {
 
         <button
           className="del-btn"
-          onClick={props.delTodo.bind(this, id)}
+          onClick={() => { props.delTodo(id, btnEl) }}
+          ref={btnEl}
         >
           <i className="fas fa-trash-alt " />
         </button>

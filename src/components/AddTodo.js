@@ -14,7 +14,8 @@ export const AddTodo = (props) => {
     });
   };
 
-  const onDoneReset = e => {
+  const onSubmit = e => {
+    e.preventDefault();
     if (newTitle.title) {
       props.addTodo(newTitle.title);
       //reset add item field, so you can type again
@@ -25,8 +26,8 @@ export const AddTodo = (props) => {
   };
 
   return (
-    <form style={{ display: "flex" }}>
-      <span onClick={onDoneReset} className="add-btn">
+    <form onSubmit={onSubmit} style={{ display: "flex" }}>
+      <span onClick={onSubmit} className="add-btn">
         <i className="fas fa-plus" />
       </span>
       <input
