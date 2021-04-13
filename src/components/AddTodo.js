@@ -1,33 +1,23 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../thunks/thunks";
 
-export const AddTodo = (props) => {
 
-  const [newTitle, setTitle] = useState({
-    title: ""
-  });
-
-  const onChange = e => {
-    //user types in
-    setTitle({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    if (newTitle.title) {
-      props.addTodo(newTitle.title);
-      //reset add item field, so you can type again
-    }
-    setTitle({
-      title: ""
-    });
-  };
+export const AddTodo = () => {
+  let dispatch = useDispatch()
+  const [newTitle, setTitle] = useState();
 
   return (
-    <form onSubmit={onSubmit} style={{ display: "flex" }}>
-      <span onClick={onSubmit} className="add-btn">
+    <form style={{ display: "flex" }}>
+      <span onClick={() => {
+        const addTodoThunk = addTodo({
+          id: new Date(),
+          title: newTitle,
+          completed: false
+        })
+        dispatch(addTodoThunk)
+        setTitle("");
+      }} className="add-btn">
         <i className="fas fa-plus" />
       </span>
       <input
@@ -36,16 +26,13 @@ export const AddTodo = (props) => {
         name="title"
         placeholder="Add item"
         style={{ flex: "10", padding: "5px" }}
-        value={newTitle.title}
-        onChange={onChange}
+        value={newTitle || ""}
+        onChange={(e) => setTitle(e.target.value)}
         autoComplete="off"
       />
     </form>
   );
 }
 
-AddTodo.propTypes = {
-  addTodo: PropTypes.func.isRequired
-};
 
 export default AddTodo;
