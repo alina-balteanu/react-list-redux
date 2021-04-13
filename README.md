@@ -1,6 +1,7 @@
 ## Todo list made with React, using Axios
 
-Recreated todolist app with functional components + hooks
+Recreated todolist app with functional components + redux
+(see version with state in components + hooks here https://github.com/alina-balteanu/react-list-new )
 Uses mockApi database
 
 You can see it in action here https://codepen.io/alina-balteanu/full/xBRgNO (all though the codepen version is connected to typicode mockdb, which generates the same id 201 for each post, so new items posted will not behave properly since they all have the same id). The github version is better :)
